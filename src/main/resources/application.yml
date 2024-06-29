@@ -5,15 +5,19 @@ server:
     context-path: /community
 
 spring:
+  profiles:
+    active: dev
   # Thymeleaf
   thymeleaf:
     cache: false
+    prefix: classpath:/template
+    suffix: .html
   # DataSource
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/community?characterEncoding=utf-8&useSSL=false&serverTimeZone=Shanghai
-    username: root
-    password: 123456
+    driver-class-name: ${moirrra.datasource.driver-class-name}
+    url: jdbc:mysql://${moirrra.datasource.host}:${moirrra.datasource.port}/${moirrra.datasource.database}?characterEncoding=utf-8&useSSL=false&serverTimeZone=Shanghai
+    username: ${moirrra.datasource.username}
+    password: ${moirrra.datasource.password}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       maximum-pool-size: 15
