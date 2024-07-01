@@ -6,3 +6,11 @@ moirrra:
     database: community
     username: root
     password: 123456
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 736043695@qq.com
+    password: mjjnwgwpqtnnbfdi
+  community:
+    path:
+      domain: http://localhost:8080
