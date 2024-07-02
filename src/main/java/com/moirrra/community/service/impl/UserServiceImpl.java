@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
     @Value("${community.path.domain}")
     private String domain;
 
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
 
     @Override
     public User findUserById(Integer id) {
