@@ -1,5 +1,6 @@
 package com.moirrra.community.controller;
 
+import com.moirrra.community.annotation.LoginRequired;
 import com.moirrra.community.entity.User;
 import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityUtil;
@@ -57,6 +58,7 @@ public class UserController {
      * 跳转账号设置界面
      * @return
      */
+    @LoginRequired
     @GetMapping("/setting")
     public String getSettingPage() {
         return "site/setting";
@@ -68,6 +70,7 @@ public class UserController {
      * @param model
      * @return
      */
+    @LoginRequired
     @PostMapping("/upload")
     public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
@@ -134,6 +137,7 @@ public class UserController {
      * @param model
      * @return
      */
+    @LoginRequired
     @PostMapping("/password")
     public String updatePassword(String oldPassword, String newPassword, Model model) {
         User user = hostHolder.getUser();
