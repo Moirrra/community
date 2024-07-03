@@ -1,5 +1,6 @@
 package com.moirrra.community.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,10 +18,9 @@ import org.slf4j.LoggerFactory;
  * @Description: 邮件
  * @Version: 1.0
  */
-
+@Slf4j
 @Component
 public class MailClient {
-    private static final Logger logger = LoggerFactory.getLogger(MailClient.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -38,7 +38,7 @@ public class MailClient {
             helper.setText(content, true);
             mailSender.send(helper.getMimeMessage());
         } catch (MessagingException e) {
-            logger.error("发生邮件失败：" + e.getMessage());
+            log.error("发生邮件失败：" + e.getMessage());
         }
 
     }

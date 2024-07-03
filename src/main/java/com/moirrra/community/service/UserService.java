@@ -19,6 +19,12 @@ public interface UserService {
     void logout(String ticket);
 
     LoginTicket getLoginTicket(String ticket);
+
+    // 更新头像
+    public void updateHeader(int userId, String headerUrl);
+
+    // 修改密码
+    public Map<String, Object> updatePassword(int userId, String oldPassword, String newPassword);
 }
 
 

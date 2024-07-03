@@ -4,6 +4,7 @@ import com.google.code.kaptcha.Producer;
 import com.moirrra.community.entity.User;
 import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityConstant;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,9 @@ import java.util.Map;
  * @Description: 登录注册
  * @Version: 1.0
  */
+@Slf4j
 @Controller
 public class LoginController {
-
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
@@ -127,7 +127,7 @@ public class LoginController {
             OutputStream os = response.getOutputStream();
             ImageIO.write(image, "png", os);
         } catch (IOException e) {
-            logger.error("响应验证码失败：" + e.getMessage());
+            log.error("响应验证码失败：" + e.getMessage());
         }
     }
 

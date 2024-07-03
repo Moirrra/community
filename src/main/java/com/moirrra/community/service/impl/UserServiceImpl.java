@@ -6,6 +6,7 @@ import com.moirrra.community.entity.LoginTicket;
 import com.moirrra.community.entity.User;
 import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityUtil;
+import com.moirrra.community.util.HostHolder;
 import com.moirrra.community.util.MailClient;
 import com.moirrra.community.util.CommunityConstant;
 import org.apache.commons.lang3.StringUtils;
@@ -166,5 +167,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public LoginTicket getLoginTicket(String ticket) {
         return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    @Override
+    public void updateHeader(int userId, String headerUrl) {
+        User user = new User();
+        user.setId(userId);
+        user.setHeaderUrl(headerUrl);
+        userMapper.updateUser(user);
+    }
+
+    @Override
+    public Map<String, Object> updatePassword(int userId, String oldPassword, String newPassword) {
+        Map<String, Object> map = new HashMap<>();
+
+        // 空值处理
+        if (StringUtils.isBlank(oldPassword)) {
+            map.put("oldPasswordMsg", "旧密码不能为空！");
+            return map;
+        }
+        if (StringUtils.isBlank(newPassword)) {
+            map.put("newPasswordMsg", "新密码不能为空！");
+            return map;
+        }
+
+        // 校验旧密码
+        User user = userMapper.getById(userId);
+        oldPassword = CommunityUtil.md5(oldPassword + user.getSalt());
+        if (!user.getPassword().equals(oldPassword)) {
+            map.put("oldPasswordMsg", "旧密码不正确！");
+            return map;
+        }
+
+        // 修改密码
+        user.setPassword(CommunityUtil.md5(newPassword + user.getSalt()));
+        userMapper.updateUser(user);
+
+        return map;
     }
 }

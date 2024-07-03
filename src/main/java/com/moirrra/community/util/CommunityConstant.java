@@ -46,4 +46,9 @@ public class CommunityConstant {
      * 记住我登录凭证超时时间
      */
     public static final int REMEMBER_EXPIRED_SECONDS = 3600 * 24 * 100;
+
+    /**
+     * 文件大小
+     */
+    public static final long ONE_MB = 1024 * 1024;
 }

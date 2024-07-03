@@ -14,3 +14,7 @@ moirrra:
   community:
     path:
       domain: http://localhost:8080
+      upload: d:/code/projects/data/community/upload
+    multipart:
+        max-file-size: 5
+        max-request-size: 50

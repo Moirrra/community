@@ -29,6 +29,10 @@ spring:
     username: ${moirrra.mail.username}
     password: ${moirrra.mail.password}
     properties.mail.smtp.ssl.enable: true
+  servlet:
+    multipart:
+      max-file-size: ${moirrra.community.multipart.max-file-size}MB
+      max-request-size: ${moirrra.community.multipart.max-request-size}MB
 
 # Mybatis
 mybatis:
@@ -48,3 +52,4 @@ logging:
 community:
   path:
     domain: ${moirrra.community.path.domain}
+    upload: ${moirrra.community.path.upload}
