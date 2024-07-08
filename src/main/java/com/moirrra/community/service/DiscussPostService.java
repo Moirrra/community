@@ -13,4 +13,6 @@ public interface DiscussPostService {
     List<DiscussPost> getDiscussPost(Integer userId, Integer offset, Integer limit);
 
     int getPostCount(Integer userId);
+
+    int addDiscussPost(DiscussPost post);
 }

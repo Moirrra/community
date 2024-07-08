@@ -17,6 +17,7 @@ public interface DiscussPostMapper {
     int getPostCount(@Param("userId") Integer userId);
 
     // 新增文章
+    int insertDiscussPost(DiscussPost discussPost);
 
     // 查询帖子详情
 
