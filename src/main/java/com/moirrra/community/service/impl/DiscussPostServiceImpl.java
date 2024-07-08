@@ -33,8 +33,6 @@ public class DiscussPostServiceImpl implements DiscussPostService {
             throw new IllegalArgumentException("参数不能为空!");
         }
 
-        String title = post.getTitle();
-        String content = post.getContent();
         // 转义HTML标记
         post.setTitle(HtmlUtils.htmlEscape(post.getTitle()));
         post.setContent(HtmlUtils.htmlEscape(post.getContent()));
