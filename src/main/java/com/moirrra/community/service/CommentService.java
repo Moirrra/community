@@ -16,4 +16,6 @@ public interface CommentService {
     List<Comment> findCommentsByEntity(Integer entityType, Integer entityId, int offset, int limit);
 
     int findCommentCountByEntity(Integer entityType, Integer entityId);
+
+    int addComment(Comment comment);
 }

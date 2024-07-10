@@ -19,4 +19,7 @@ public interface CommentMapper {
                               @Param("offset") int offset, @Param("limit") int limit);
 
     int getCountByEntity(@Param("entityType") Integer entityType, @Param("entityId")Integer entityId);
+
+    int insertComment(Comment comment);
+
 }
