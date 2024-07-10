@@ -37,6 +37,7 @@ public class CommunityConstant {
     // 已激活
     public static final int INVALID = 1;
 
+
     /**
      * 默认登录凭证超时时间
      */
@@ -51,4 +52,11 @@ public class CommunityConstant {
      * 文件大小
      */
     public static final long ONE_MB = 1024 * 1024;
+
+    /**
+     * 评论实体类型
+     */
+    public static final int ENTITY_TYPE_POST = 1;
+
+    public static final int ENTITY_TYPE_COMMENT = 2;
 }

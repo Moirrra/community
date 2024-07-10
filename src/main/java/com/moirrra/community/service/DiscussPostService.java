@@ -15,4 +15,6 @@ public interface DiscussPostService {
     int getPostCount(Integer userId);
 
     int addDiscussPost(DiscussPost post);
+
+    DiscussPost findDiscussPostById(Integer id);
 }

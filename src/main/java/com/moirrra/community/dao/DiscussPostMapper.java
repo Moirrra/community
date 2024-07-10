@@ -20,6 +20,7 @@ public interface DiscussPostMapper {
     int insertDiscussPost(DiscussPost discussPost);
 
     // 查询帖子详情
+    DiscussPost getById(Integer id);
 
     // 更新帖子
 }
