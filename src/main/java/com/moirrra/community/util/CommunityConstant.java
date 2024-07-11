@@ -59,4 +59,14 @@ public class CommunityConstant {
     public static final int ENTITY_TYPE_POST = 1;
 
     public static final int ENTITY_TYPE_COMMENT = 2;
+
+    /**
+     * 消息状态
+     * 0-未读;1-已读;2-删除;
+     */
+    public static final int MESSAGE_UNREAD = 0;
+
+    public static final int MESSAGE_READ = 1;
+
+    public static final int MESSAGE_DELETED = 2;
 }

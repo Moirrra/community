@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByName(String username) {
+        return userMapper.getByName(username);
+    }
+
+    @Override
     public Map<String, Object> register(User user) {
         Map<String, Object> map = new HashMap<>();
         // 空值处理

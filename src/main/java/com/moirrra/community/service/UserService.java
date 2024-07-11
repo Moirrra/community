@@ -10,6 +10,8 @@ import java.util.Map;
 public interface UserService {
     User findUserById(Integer id);
 
+    User findUserByName(String username);
+
     Map<String, Object> register(User user);
 
     int activate(int userId, String code);
