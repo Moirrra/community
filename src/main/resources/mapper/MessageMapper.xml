@@ -68,7 +68,7 @@
     </select>
 
     <insert id="insertMessage" parameterType="Message" keyProperty="id">
-        insert into message (<include refid="insertField"></include>)
+        insert into message (<include refid="insertField"/>)
         values (#{fromId}, #{toId}, #{conversationId}, #{content}, #{status}, #{createTime})
     </insert>
 
