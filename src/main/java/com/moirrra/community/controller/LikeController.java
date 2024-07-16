@@ -1,6 +1,7 @@
 package com.moirrra.community.controller;
 
 import com.moirrra.community.entity.User;
+import com.moirrra.community.service.CommentService;
 import com.moirrra.community.service.LikeService;
 import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.HostHolder;
@@ -29,16 +30,16 @@ public class LikeController {
 
     @PostMapping("/like")
     @ResponseBody
-    public String like(Integer entityType, Integer entityId) {
-        User currentUser = hostHolder.getUser();
+    public String like(Integer entityType, Integer entityId, Integer entityUserId) {
+        User user = hostHolder.getUser();
 
         // 点赞
-        likeService.like(currentUser.getId(), entityType, entityId);
+        likeService.like(user.getId(), entityType, entityId, entityUserId);
 
         // 点赞数量
-        Long likeCount = likeService.findEntityLikeCount(entityType, entityId);
+        long likeCount = likeService.findEntityLikeCount(entityType, entityId);
         // 点赞状态
-        int likeStatus = currentUser == null ? 0 : likeService.findEntityLikeStatus(currentUser.getId(), entityType, entityId);
+        int likeStatus = likeService.findEntityLikeStatus(user.getId(), entityType, entityId);
 
         Map<String, Object> map = new HashMap<>();
         map.put("likeCount", likeCount);

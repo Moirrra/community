@@ -2,6 +2,7 @@ package com.moirrra.community.controller;
 
 import com.moirrra.community.annotation.LoginRequired;
 import com.moirrra.community.entity.User;
+import com.moirrra.community.service.LikeService;
 import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.HostHolder;
@@ -50,6 +51,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -150,5 +154,19 @@ public class UserController {
         model.addAttribute("oldPasswordMsg", map.get("oldPasswordMsg"));
         model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
         return "site/setting";
+    }
+
+    @GetMapping("/profile/{userId}")
+    public String getProfilePage(@PathVariable("userId") Integer userId, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在！");
+        }
+
+        model.addAttribute("user", user);
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+
+        return "site/profile";
     }
 }
