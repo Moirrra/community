@@ -33,6 +33,12 @@ spring:
     multipart:
       max-file-size: ${moirrra.community.multipart.max-file-size}MB
       max-request-size: ${moirrra.community.multipart.max-request-size}MB
+  redis:
+    database: ${moirrra.redis.database}
+    host: ${moirrra.redis.host}
+    port: ${moirrra.redis.port}
+    password: ${moirrra.redis.password}
+
 
 # Mybatis
 mybatis:

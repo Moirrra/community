@@ -18,3 +18,8 @@ moirrra:
     multipart:
         max-file-size: 5
         max-request-size: 50
+  redis:
+    database: 11
+    host: localhost
+    port: 6379
+    password: 123456
