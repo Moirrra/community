@@ -1,5 +1,8 @@
 package com.moirrra.community.service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author: Moirrra
  * @CreateTime: 2024-07-16
@@ -23,4 +26,10 @@ public interface FollowService {
 
     // 查询当前用户是否已关注该实体
     boolean hasFollowed(Integer userId, Integer entityType, Integer entityId);
+
+    // 查询用户关注列表
+    List<Map<String, Object>> findFollowees(Integer userId, int offset, int limit);
+
+    // 查询用户粉丝列表
+    List<Map<String, Object>> findFollowers(Integer userId, int offset, int limit);
 }
