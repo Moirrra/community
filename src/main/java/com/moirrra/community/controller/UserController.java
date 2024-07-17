@@ -2,8 +2,10 @@ package com.moirrra.community.controller;
 
 import com.moirrra.community.annotation.LoginRequired;
 import com.moirrra.community.entity.User;
+import com.moirrra.community.service.FollowService;
 import com.moirrra.community.service.LikeService;
 import com.moirrra.community.service.UserService;
+import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +56,9 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private FollowService followService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -156,16 +161,39 @@ public class UserController {
         return "site/setting";
     }
 
+    /**
+     * 跳转个人信息页
+     * @param userId
+     * @param model
+     * @return
+     */
     @GetMapping("/profile/{userId}")
     public String getProfilePage(@PathVariable("userId") Integer userId, Model model) {
         User user = userService.findUserById(userId);
         if (user == null) {
             throw new RuntimeException("该用户不存在！");
         }
-
         model.addAttribute("user", user);
+
+        // 点赞数
         int likeCount = likeService.findUserLikeCount(userId);
         model.addAttribute("likeCount", likeCount);
+
+        // 关注数量
+        long followeeCount = followService.findFolloweeCount(userId, CommunityConstant.ENTITY_TYPE_USER);
+        model.addAttribute("followeeCount", followeeCount);
+
+        // 粉丝数量
+        long followerCount = followService.findFollowerCount(CommunityConstant.ENTITY_TYPE_USER, userId);
+        model.addAttribute("followerCount", followerCount);
+
+        // 是否已关注
+        boolean hasFollowed = false;
+        if (hostHolder.getUser() != null) {
+            hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(),
+                    CommunityConstant.ENTITY_TYPE_USER, userId);
+            model.addAttribute("hasFollowed", hasFollowed);
+        }
 
         return "site/profile";
     }

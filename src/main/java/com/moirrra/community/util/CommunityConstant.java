@@ -60,6 +60,8 @@ public class CommunityConstant {
 
     public static final int ENTITY_TYPE_COMMENT = 2;
 
+    public static final int ENTITY_TYPE_USER = 3;
+
     /**
      * 消息状态
      * 0-未读;1-已读;2-删除;
