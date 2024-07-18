@@ -23,10 +23,10 @@ public interface UserService {
     LoginTicket getLoginTicket(String ticket);
 
     // 更新头像
-    public void updateHeader(int userId, String headerUrl);
+    void updateHeader(int userId, String headerUrl);
 
     // 修改密码
-    public Map<String, Object> updatePassword(int userId, String oldPassword, String newPassword);
+    Map<String, Object> updatePassword(int userId, String oldPassword, String newPassword);
 }
 
 

@@ -39,7 +39,7 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
         if (ticket != null) {
             LoginTicket loginTicket = userService.getLoginTicket(ticket);
             if (loginTicket != null
-                && loginTicket.getStatus() == CommunityConstant.VALID
+                && loginTicket.getStatus() == CommunityConstant.LOGIN_TICKET_VALID
                 && loginTicket.getExpired().after(new Date())) {
                 User user = userService.findUserById(loginTicket.getUserId());
                 // 在本次请求中持有用户

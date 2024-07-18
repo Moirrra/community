@@ -24,18 +24,17 @@ public class CommunityConstant {
      * 账号状态
      */
     // 未激活
-    public static final int NOT_ACTIVATED = 0;
+    public static final int ACCOUNT_NOT_ACTIVATED = 0;
 
     // 已激活
-    public static final int ACTIVATED = 1;
+    public static final int ACCOUNT_ACTIVATED = 1;
 
     /**
      * 登录凭证是否有效
      */
-    public static final int VALID = 0;
+    public static final int LOGIN_TICKET_VALID = 0;
 
-    // 已激活
-    public static final int INVALID = 1;
+    public static final int LOGIN_TICKET_INVALID = 1;
 
 
     /**
@@ -47,6 +46,16 @@ public class CommunityConstant {
      * 记住我登录凭证超时时间
      */
     public static final int REMEMBER_EXPIRED_SECONDS = 3600 * 24 * 100;
+
+    /**
+     * 验证码超时时间
+     */
+    public static final int KAPTCHA_EXPIRED_SECONDS = 60;
+
+    /**
+     * 用户信息缓存超时时间
+     */
+    public static final int USER_EXPIRED_SECONDS = 3600;
 
     /**
      * 文件大小
