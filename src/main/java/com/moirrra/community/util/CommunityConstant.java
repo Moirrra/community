@@ -80,4 +80,20 @@ public class CommunityConstant {
     public static final int MESSAGE_READ = 1;
 
     public static final int MESSAGE_DELETED = 2;
+
+
+    /**
+     * 主题类型
+     */
+    public static final String TOPIC_COMMENT = "comment";
+
+    public static final String TOPIC_LIKE = "like";
+
+    public static final String TOPIC_FOLLOW = "follow";
+
+    // 系统id
+    public static final int SYSTEM_USER_ID = 1;
+
+    // 点赞状态
+    public static final int STATUS_LIKE = 1;
 }

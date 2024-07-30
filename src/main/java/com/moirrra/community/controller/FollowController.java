@@ -1,7 +1,9 @@
 package com.moirrra.community.controller;
 
+import com.moirrra.community.entity.Event;
 import com.moirrra.community.entity.Page;
 import com.moirrra.community.entity.User;
+import com.moirrra.community.event.EventProducer;
 import com.moirrra.community.service.FollowService;
 import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityConstant;
@@ -36,6 +38,9 @@ public class FollowController {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     /**
      * 关注 异步
      * @param entityType
@@ -47,6 +52,16 @@ public class FollowController {
     public String follow(Integer entityType, Integer entityId) {
         User user = hostHolder.getUser();
         followService.follow(user.getId(), entityType, entityId);
+
+        // 触发关注系统通知
+        Event event = new Event()
+                .setTopic(CommunityConstant.TOPIC_FOLLOW)
+                .setUserId(user.getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.triggerEvent(event);
+
         return CommunityUtil.getJSONString(0, "已关注");
     }
 

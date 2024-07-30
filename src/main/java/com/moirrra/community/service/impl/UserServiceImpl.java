@@ -1,6 +1,5 @@
 package com.moirrra.community.service.impl;
 
-import com.moirrra.community.dao.LoginTicketMapper;
 import com.moirrra.community.dao.UserMapper;
 import com.moirrra.community.entity.LoginTicket;
 import com.moirrra.community.entity.User;
@@ -25,8 +24,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private LoginTicketMapper loginTicketMapper;
+    // @Autowired
+    // private LoginTicketMapper loginTicketMapper;
 
     @Autowired
     private MailClient mailClient;
@@ -163,7 +162,7 @@ public class UserServiceImpl implements UserService {
         loginTicket.setUserId(user.getId());
         loginTicket.setTicket(CommunityUtil.generateUUID());
         loginTicket.setStatus(0);
-        loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000L));
 
         String ticketKey = RedisKeyUtil.getTicketKey(loginTicket.getTicket());
         redisTemplate.opsForValue().set(ticketKey, loginTicket);

@@ -22,4 +22,6 @@ public interface CommentMapper {
 
     int insertComment(Comment comment);
 
+    Comment getById(Integer id);
+
 }

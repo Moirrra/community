@@ -1,8 +1,11 @@
 package com.moirrra.community.controller;
 
+import com.moirrra.community.entity.Event;
 import com.moirrra.community.entity.User;
+import com.moirrra.community.event.EventProducer;
 import com.moirrra.community.service.CommentService;
 import com.moirrra.community.service.LikeService;
+import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +31,12 @@ public class LikeController {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @PostMapping("/like")
     @ResponseBody
-    public String like(Integer entityType, Integer entityId, Integer entityUserId) {
+    public String like(Integer entityType, Integer entityId, Integer entityUserId, Integer postId) {
         User user = hostHolder.getUser();
 
         // 点赞
@@ -44,6 +50,17 @@ public class LikeController {
         Map<String, Object> map = new HashMap<>();
         map.put("likeCount", likeCount);
         map.put("likeStatus", likeStatus);
+
+        // 触发点赞系统通知
+        if (likeStatus == CommunityConstant.STATUS_LIKE) {
+            Event event = new Event()
+                    .setTopic(CommunityConstant.TOPIC_LIKE)
+                    .setUserId(user.getId())
+                    .setEntityId(entityId)
+                    .setEntityUserId(entityUserId)
+                    .setData("postId", postId);
+            eventProducer.triggerEvent(event);
+        }
 
         return CommunityUtil.getJSONString(0, null, map);
     }

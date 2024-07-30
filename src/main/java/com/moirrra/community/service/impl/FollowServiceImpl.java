@@ -4,7 +4,6 @@ import com.moirrra.community.entity.User;
 import com.moirrra.community.service.FollowService;
 import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityConstant;
-import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

@@ -63,4 +63,11 @@ public class CommentServiceImpl implements CommentService {
         }
         return 0;
     }
+
+    @Override
+    public Comment findCommentById(Integer id) {
+        return commentMapper.getById(id);
+    }
+
+
 }

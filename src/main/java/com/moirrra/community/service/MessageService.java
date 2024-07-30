@@ -26,4 +26,12 @@ public interface MessageService {
     int addMessage(Message message);
 
     int readMessage(List<Integer> ids);
+
+    Message findLatestNotice(Integer userId, String topic);
+
+    int findNoticeCount(Integer userId, String topic);
+
+    int findNoticeUnreadCount(Integer userId, String topic);
+
+    List<Message> findNotices(Integer userId, String topic, int offset, int limit);
 }
