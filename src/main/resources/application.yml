@@ -44,6 +44,14 @@ spring:
       group-id: community-consumer-group # consumer.properties
       enable-auto-commit: true
       auto-commit-interval: 3000
+  # Elastic search
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+  elasticsearch:
+    uris: 127.0.0.1:9200
+    connection-timeout: 20000ms
 
 
 # Mybatis

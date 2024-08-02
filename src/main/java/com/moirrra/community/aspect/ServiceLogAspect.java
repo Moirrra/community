@@ -29,19 +29,19 @@ public class ServiceLogAspect {
 
     }
 
-    @Before("pointcut()")
-    public void before(JoinPoint joinPoint) {
-        // 用户[1.2.3.4],在[xxx],访问了[com.moirrra.community.service.xxx()].
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
-            return;
-        }
-        HttpServletRequest request = attributes.getRequest();
-        String ipAddr = request.getRemoteHost();
-        String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String target = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
-        log.info(String.format("用户[%s],在[%s],访问了[%s].", ipAddr, now, target));
-    }
+    // @Before("pointcut()")
+    // public void before(JoinPoint joinPoint) {
+    //     // 用户[1.2.3.4],在[xxx],访问了[com.moirrra.community.service.xxx()].
+    //     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    //     if (attributes == null) {
+    //         return;
+    //     }
+    //     HttpServletRequest request = attributes.getRequest();
+    //     String ipAddr = request.getRemoteHost();
+    //     String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    //     String target = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+    //     log.info(String.format("用户[%s],在[%s],访问了[%s].", ipAddr, now, target));
+    // }
 
     // @After("pointcut()")
     // public void after() {

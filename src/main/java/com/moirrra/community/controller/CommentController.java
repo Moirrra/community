@@ -46,7 +46,7 @@ public class CommentController {
         comment.setCreateTime(new Date());
         commentService.addComment(comment);
 
-        // 触发评论事件
+        // 触发事件: 评论系统通知
         Event event = new Event()
                 .setTopic(CommunityConstant.TOPIC_COMMENT)
                 .setUserId(hostHolder.getUser().getId())
@@ -64,6 +64,16 @@ public class CommentController {
         }
 
         eventProducer.triggerEvent(event);
+
+        if (comment.getEntityType() == CommunityConstant.ENTITY_TYPE_POST) {
+            // 触发事件：发帖保存到es服务器
+            event = new Event()
+                    .setTopic(CommunityConstant.TOPIC_PUBLISH)
+                    .setUserId(comment.getUserId())
+                    .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                    .setEntityId(discussPostId);
+            eventProducer.triggerEvent(event);
+        }
 
         return "redirect:/discuss/detail/" + discussPostId;
     }

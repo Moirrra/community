@@ -1,9 +1,7 @@
 package com.moirrra.community.controller;
 
-import com.moirrra.community.entity.Comment;
-import com.moirrra.community.entity.DiscussPost;
-import com.moirrra.community.entity.Page;
-import com.moirrra.community.entity.User;
+import com.moirrra.community.entity.*;
+import com.moirrra.community.event.EventProducer;
 import com.moirrra.community.service.CommentService;
 import com.moirrra.community.service.DiscussPostService;
 import com.moirrra.community.service.LikeService;
@@ -43,6 +41,9 @@ public class DiscussPostController {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @PostMapping("/add")
     @ResponseBody
     public String addDiscussPost(String title, String content) {
@@ -57,6 +58,14 @@ public class DiscussPostController {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+
+        // 触发事件：存入es服务器
+        Event event = new Event()
+                .setTopic(CommunityConstant.TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.triggerEvent(event);
 
         // 报错情况将来统一处理
         return CommunityUtil.getJSONString(0, "发布成功！");

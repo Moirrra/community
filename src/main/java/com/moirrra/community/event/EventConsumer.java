@@ -1,8 +1,11 @@
 package com.moirrra.community.event;
 
 import com.alibaba.fastjson.JSONObject;
+import com.moirrra.community.entity.DiscussPost;
 import com.moirrra.community.entity.Event;
 import com.moirrra.community.entity.Message;
+import com.moirrra.community.service.DiscussPostService;
+import com.moirrra.community.service.ElasticsearchService;
 import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +32,20 @@ public class EventConsumer {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private DiscussPostService discussPostService;
+
+    @Autowired
+    private ElasticsearchService elasticsearchService;
+
+    /**
+     * 消费 评论、点赞、关注 事件
+     * @param record
+     */
     @KafkaListener(topics = {
             CommunityConstant.TOPIC_COMMENT,
             CommunityConstant.TOPIC_LIKE,
-            CommunityConstant.TOPIC_FOLLOW},
-            groupId = "${spring.kafka.consumer.group-id}"
+            CommunityConstant.TOPIC_FOLLOW}
     )
     public void handleMessage(ConsumerRecord record) {
         if (record == null || record.value() == null) {
@@ -68,4 +80,23 @@ public class EventConsumer {
         message.setContent(JSONObject.toJSONString(content));
         messageService.addMessage(message);
     }
+
+
+    @KafkaListener(topics = {CommunityConstant.TOPIC_PUBLISH})
+    public void handlePublishMessage(ConsumerRecord record) {
+        if (record == null || record.value() == null) {
+            log.error("消息的内容为空！");
+            return;
+        }
+
+        Event event = JSONObject.parseObject(record.value().toString(), Event.class);
+        if (event == null) {
+            log.error("消息格式错误！");
+            return;
+        }
+
+        DiscussPost post = discussPostService.findDiscussPostById(event.getEntityId());
+        elasticsearchService.saveDiscussPost(post);
+    }
+
 }
