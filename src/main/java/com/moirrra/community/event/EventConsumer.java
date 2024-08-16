@@ -82,6 +82,7 @@ public class EventConsumer {
     }
 
 
+    // 消费发帖时间
     @KafkaListener(topics = {CommunityConstant.TOPIC_PUBLISH})
     public void handlePublishMessage(ConsumerRecord record) {
         if (record == null || record.value() == null) {
@@ -99,4 +100,20 @@ public class EventConsumer {
         elasticsearchService.saveDiscussPost(post);
     }
 
+    // 消费删帖时间
+    @KafkaListener(topics = {CommunityConstant.TOPIC_DELETE})
+    public void handleDeleteMessage(ConsumerRecord record) {
+        if (record == null || record.value() == null) {
+            log.error("消息的内容为空！");
+            return;
+        }
+
+        Event event = JSONObject.parseObject(record.value().toString(), Event.class);
+        if (event == null) {
+            log.error("消息格式错误！");
+            return;
+        }
+
+        elasticsearchService.deleteDiscussPost(event.getEntityId());
+    }
 }

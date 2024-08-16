@@ -24,4 +24,8 @@ public interface DiscussPostMapper {
 
     // 更新帖子评论数
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount")Integer commentCount);
+
+    int updateType(@Param("id")Integer id, @Param("type")Integer type);
+
+    int updateStatus(@Param("id")Integer id, @Param("status")Integer status);
 }

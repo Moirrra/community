@@ -44,6 +44,12 @@ public class DiscussPostController {
     @Autowired
     private EventProducer eventProducer;
 
+    /**
+     * 发布帖子
+     * @param title
+     * @param content
+     * @return
+     */
     @PostMapping("/add")
     @ResponseBody
     public String addDiscussPost(String title, String content) {
@@ -156,6 +162,66 @@ public class DiscussPostController {
 
         return "site/discuss-detail";
     }
-    
-    
+
+    /**
+     * 置顶
+     * @param id
+     * @return
+     */
+    @PostMapping("/top")
+    @ResponseBody
+    public String setTop(Integer id) {
+        discussPostService.updateType(id, 1);
+        // 同步到elasticSearch
+        // 触发事件：存入es服务器
+        Event event = new Event()
+                .setTopic(CommunityConstant.TOPIC_PUBLISH)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(id);
+        eventProducer.triggerEvent(event);
+
+        return CommunityUtil.getJSONString(0);
+    }
+
+    /**
+     * 加精
+     * @param id
+     * @return
+     */
+    @PostMapping("/wonderful")
+    @ResponseBody
+    public String setWonderful(Integer id) {
+        discussPostService.updateStatus(id, 1);
+        // 同步到elasticSearch
+        // 触发事件：存入es服务器
+        Event event = new Event()
+                .setTopic(CommunityConstant.TOPIC_PUBLISH)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(id);
+        eventProducer.triggerEvent(event);
+
+        return CommunityUtil.getJSONString(0);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/delete")
+    @ResponseBody
+    public String setDelete(Integer id) {
+        discussPostService.updateStatus(id, 2);
+        // 触发删帖事件：清除es服务器对应数据
+        Event event = new Event()
+                .setTopic(CommunityConstant.TOPIC_DELETE)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(id);
+        eventProducer.triggerEvent(event);
+
+        return CommunityUtil.getJSONString(0);
+    }
 }

@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          crossorigin="anonymous">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/global.css}"/>
     <link rel="stylesheet" th:href="@{/css/discuss-detail.css}"/>
     <title>牛客网-帖子详情</title>
@@ -73,14 +74,23 @@
             <h6 class="mb-4">
                 <img src="http://static.nowcoder.com/images/img/icons/ico-discuss.png"/>
                 <span th:utext="${post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</span>
+<!--                <div class="float-right">-->
+<!--                    <input type="hidden" id="postId" th:value="${post.id}">-->
+<!--                    <button type="button" class="btn btn-danger btn-sm" id="topBtn"-->
+<!--                            th:text="${post.type==1?'取消置顶':'置顶'}" sec:authorize="hasAnyAuthority('moderator')">置顶</button>-->
+<!--                    <button type="button" class="btn btn-danger btn-sm" id="wonderfulBtn"-->
+<!--                            th:text="${post.status==1?'取消加精':'加精'}" sec:authorize="hasAnyAuthority('moderator')">加精</button>-->
+<!--                    <button type="button" class="btn btn-danger btn-sm" id="deleteBtn"-->
+<!--                        th:disabled="${post.status==2}" sec:authorize="hasAnyAuthority('admin')">删除</button>-->
+<!--                </div>-->
                 <div class="float-right">
                     <input type="hidden" id="postId" th:value="${post.id}">
                     <button type="button" class="btn btn-danger btn-sm" id="topBtn"
-                            th:text="${post.type==1?'取消置顶':'置顶'}" sec:authorize="hasAnyAuthority('moderator')">置顶</button>
+                            sec:authorize="hasAnyAuthority('moderator')">置顶</button>
                     <button type="button" class="btn btn-danger btn-sm" id="wonderfulBtn"
-                            th:text="${post.status==1?'取消加精':'加精'}" sec:authorize="hasAnyAuthority('moderator')">加精</button>
+                            sec:authorize="hasAnyAuthority('moderator')">加精</button>
                     <button type="button" class="btn btn-danger btn-sm" id="deleteBtn"
-                        th:disabled="${post.status==2}" sec:authorize="hasAnyAuthority('admin')">删除</button>
+                            sec:authorize="hasAnyAuthority('admin')">删除</button>
                 </div>
             </h6>
             <!-- 作者 -->
@@ -334,7 +344,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>-->
+<script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/global.js}"></script>
 <script th:src="@{/js/discuss.js}"></script>
 </body>

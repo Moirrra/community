@@ -92,6 +92,8 @@ public class CommunityConstant {
     public static final String TOPIC_FOLLOW = "follow";
     // 发帖
     public static final String TOPIC_PUBLISH = "publish";
+    // 删帖
+    public static final String TOPIC_DELETE = "delete";
 
     // 系统id
     public static final int SYSTEM_USER_ID = 1;
@@ -99,5 +101,17 @@ public class CommunityConstant {
     // 点赞状态
     public static final int STATUS_LIKE = 1;
 
+
+    /**
+     * 用户权限
+     */
+    // 普通用户
+    public static final String AUTHORITY_USER = "user";
+
+    // 管理员
+    public static final String AUTHORITY_ADMIN = "admin";
+
+    // 版主
+    public static final String AUTHORITY_MODERATOR = "moderator";
 
 }
