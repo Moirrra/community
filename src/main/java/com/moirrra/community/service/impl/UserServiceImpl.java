@@ -234,8 +234,6 @@ public class UserServiceImpl implements UserService {
             @Override
             public String getAuthority() {
                 switch (user.getType()) {
-                    case 0:
-                        return CommunityConstant.AUTHORITY_USER;
                     case 1:
                         return CommunityConstant.AUTHORITY_ADMIN;
                     case 2:
