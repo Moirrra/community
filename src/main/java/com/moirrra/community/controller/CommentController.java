@@ -8,8 +8,10 @@ import com.moirrra.community.service.CommentService;
 import com.moirrra.community.service.DiscussPostService;
 import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.util.HostHolder;
+import com.moirrra.community.util.RedisKeyUtil;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +40,9 @@ public class CommentController {
 
     @Autowired
     private EventProducer eventProducer;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping("/add/{discussPostId}")
     public String addComment(@PathVariable("discussPostId") Integer discussPostId, Comment comment) {
@@ -73,6 +78,10 @@ public class CommentController {
                     .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
                     .setEntityId(discussPostId);
             eventProducer.triggerEvent(event);
+
+            // 计算帖子分数
+            String redisKey = RedisKeyUtil.getPostScoreKey();
+            redisTemplate.opsForSet().add(redisKey, discussPostId);
         }
 
         return "redirect:/discuss/detail/" + discussPostId;

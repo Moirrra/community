@@ -62,16 +62,16 @@ public class ElasticsearchTest {
 
     @Test
     public void testInsertList() {
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(101, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(102, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(103, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(111, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(112, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(133, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(134, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(138, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(149, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.getByUserId(152, 0, 100));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(101, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(102, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(103, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(111, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(112, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(133, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(134, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(138, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(149, 0, 100, 0));
+        discussPostRepository.saveAll(discussPostMapper.getByUserId(152, 0, 100, 0));
     }
 
     @Test

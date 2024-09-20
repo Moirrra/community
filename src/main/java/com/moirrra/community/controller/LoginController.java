@@ -179,7 +179,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(@CookieValue("ticket")String ticket) {
+    public String logout(@CookieValue("ticket")String ticket, HttpServletResponse response) {
         userService.logout(ticket);
         SecurityContextHolder.clearContext();
         return "redirect:/login";

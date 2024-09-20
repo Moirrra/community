@@ -11,7 +11,8 @@ import java.util.List;
 public interface DiscussPostMapper {
 
     // 根据用户id查询帖子
-    List<DiscussPost> getByUserId(@Param("userId") Integer userId, @Param("offset") Integer offset, @Param("limit") Integer limit);
+    List<DiscussPost> getByUserId(@Param("userId") Integer userId, @Param("offset") Integer offset,
+                                  @Param("limit") Integer limit, @Param("orderMode") Integer orderMode);
 
     // 获得用户发帖数
     int getPostCount(@Param("userId") Integer userId);
@@ -28,4 +29,6 @@ public interface DiscussPostMapper {
     int updateType(@Param("id")Integer id, @Param("type")Integer type);
 
     int updateStatus(@Param("id")Integer id, @Param("status")Integer status);
+
+    int updateScore(@Param("id")Integer id, @Param("score") Double score);
 }

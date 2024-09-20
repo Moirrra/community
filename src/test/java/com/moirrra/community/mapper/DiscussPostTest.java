@@ -15,7 +15,7 @@ public class DiscussPostTest {
 
     @Test
     public void testGetByUserId() {
-        List<DiscussPost> list = discussPostMapper.getByUserId(0, 0, 10);
+        List<DiscussPost> list = discussPostMapper.getByUserId(0, 0, 10, 0);
         for (DiscussPost post : list) {
             System.out.println(post);
         }

@@ -8,7 +8,9 @@ import com.moirrra.community.service.LikeService;
 import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.HostHolder;
+import com.moirrra.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +35,9 @@ public class LikeController {
 
     @Autowired
     private EventProducer eventProducer;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping("/like")
     @ResponseBody
@@ -60,6 +65,12 @@ public class LikeController {
                     .setEntityUserId(entityUserId)
                     .setData("postId", postId);
             eventProducer.triggerEvent(event);
+        }
+
+        if (entityType == CommunityConstant.ENTITY_TYPE_POST) {
+            // 计算帖子分数
+            String redisKey = RedisKeyUtil.getPostScoreKey();
+            redisTemplate.opsForSet().add(redisKey, postId);
         }
 
         return CommunityUtil.getJSONString(0, null, map);

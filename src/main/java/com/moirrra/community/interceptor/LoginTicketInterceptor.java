@@ -6,11 +6,14 @@ import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.util.CookieUtil;
 import com.moirrra.community.util.HostHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -27,6 +31,7 @@ import java.util.Date;
  * @Version: 1.0
  */
 @Component
+@Slf4j
 public class LoginTicketInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -37,6 +42,10 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 获取请求路径
+        String uri = request.getRequestURI();
+        log.info("当前请求路径为:{}",uri);
+
         // 获取凭证
         String ticket = CookieUtil.getValue(request, "ticket");
 

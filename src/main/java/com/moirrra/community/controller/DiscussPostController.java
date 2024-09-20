@@ -9,7 +9,9 @@ import com.moirrra.community.service.UserService;
 import com.moirrra.community.util.CommunityConstant;
 import com.moirrra.community.util.CommunityUtil;
 import com.moirrra.community.util.HostHolder;
+import com.moirrra.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +46,9 @@ public class DiscussPostController {
     @Autowired
     private EventProducer eventProducer;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /**
      * 发布帖子
      * @param title
@@ -72,6 +77,10 @@ public class DiscussPostController {
                 .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
                 .setEntityId(post.getId());
         eventProducer.triggerEvent(event);
+
+        // 计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, post.getId());
 
         // 报错情况将来统一处理
         return CommunityUtil.getJSONString(0, "发布成功！");
@@ -201,6 +210,10 @@ public class DiscussPostController {
                 .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
                 .setEntityId(id);
         eventProducer.triggerEvent(event);
+
+        // 计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, id);
 
         return CommunityUtil.getJSONString(0);
     }

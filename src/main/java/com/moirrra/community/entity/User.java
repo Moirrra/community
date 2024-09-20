@@ -14,8 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@JsonIgnoreProperties({"enabled","accountNonExpired", "accountNonLocked", "credentialsNonExpired", "authorities"})
-public class User implements UserDetails {
+public class User{
     private Integer id;
 
     private String username;
@@ -44,44 +43,4 @@ public class User implements UserDetails {
 
     private Date createTime;
 
-    // true: 账号没有过期
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    // true: 账号未锁定
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    // true: 凭证未过期
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    // true: 账号可用
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> list = new ArrayList<>();
-        list.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                switch (type) {
-                    case 1:
-                        return "ADMIN";
-                    default:
-                        return "USER";
-                }
-            }
-        });
-        return null;
-    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public interface DiscussPostService {
-    List<DiscussPost> getDiscussPost(Integer userId, Integer offset, Integer limit);
+    List<DiscussPost> getDiscussPost(Integer userId, Integer offset, Integer limit, Integer orderMode);
 
     int getPostCount(Integer userId);
 
@@ -23,4 +23,6 @@ public interface DiscussPostService {
     int updateType(Integer id, Integer type);
 
     int updateStatus(Integer id, Integer status);
+
+    int updateScore(Integer id, Double score);
 }
